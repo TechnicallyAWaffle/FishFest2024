@@ -13,7 +13,7 @@ public class Movement : MonoBehaviour
     float swimSpeed = 15f;
 
     [SerializeField]
-    float dashForce = 5f;
+    float dashForce = 20f;
 
     [SerializeField]
     float dashTime = 0.25f;
@@ -22,16 +22,20 @@ public class Movement : MonoBehaviour
     Transform bodySprite;
 
     Rigidbody2D rb2d;
+
     Vector2 mousePos;
+
     Vector2 mouseWorldPos;
+
     Vector2 mousePath;
+
     float mouseDistance;
+
     float mouseAngle;
 
     bool isDashing = false;
     float dashTimeElapsed = 0f;
-
-    private void Awake()
+    private void Awake() 
     {
         rb2d = GetComponent<Rigidbody2D>();
     }
@@ -84,7 +88,9 @@ public class Movement : MonoBehaviour
     {
         if (!isDashing)
         {
-            rb2d.velocity = mousePath.normalized * swimSpeed;
+            //A normalized vector preserves the direction of the original vector while reducing the magnitude to 1 or the smallest unit.
+            //The velocity of the rigid body is in the direction of the mousePath at the magnitude swimSpeed
+            rb2d.velocity = mousePath;//.normalized * swimSpeed; //<-- removal of this makes speed directly correlated to distance of mouse (i.e. slower closer, faster further)
         }
     }
 
