@@ -12,6 +12,7 @@ public class EnemyScript : MonoBehaviour
     Transform playerTransform;
     Vector2 playerPos;
     Vector2 currEnemyPos;
+    Vector2 spawnPos;
     float angleFromPlayer;
     Vector2 directionTowardPlayer;
     Vector2 directionAwayFromPlayer;
@@ -20,6 +21,7 @@ public class EnemyScript : MonoBehaviour
         enemyrb2d = GetComponent<Rigidbody2D>();
         levelManager = GameObject.FindObjectOfType<LevelManager>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        spawnPos = new(transform.position.x, transform.position.y);
     }
 
     // Update is called once per frame
@@ -31,34 +33,16 @@ public class EnemyScript : MonoBehaviour
         directionTowardPlayer = playerPos - currEnemyPos;
         directionAwayFromPlayer = currEnemyPos - playerPos;
 
-        angleFromPlayer = GetAngleToPlayer(directionAwayFromPlayer);
+        angleFromPlayer = GetAngle(directionAwayFromPlayer);
 
 
     }
 
     private void FixedUpdate()
     {
-        /*        if (nearPlayer)
-                {
-                    enemyrb2d.velocity = Vector2.up * 2;
-                }
-                else {
-                    enemyrb2d.velocity = Vector2.zero; 
-                }*/
-
-        if (nearPlayer)
-        {
-            enemyrb2d.velocity = directionAwayFromPlayer.normalized * 5;
-            transform.rotation = Quaternion.Euler(0, 0, angleFromPlayer + 180);
-        }
-        else
-        {
-            enemyrb2d.velocity = Vector2.zero;
-            transform.rotation = Quaternion.identity;
-        }
-
-        
-
+        FleeingBehaviour();
+        //ChasingBehaviour();
+        //NeutralBehaviour();
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -76,11 +60,72 @@ public class EnemyScript : MonoBehaviour
         }
 
     }
-    private float GetAngleToPlayer(Vector2 direction)
+    private float GetAngle(Vector2 direction)
     {
         float angleRad = Mathf.Atan2(direction.y, direction.x);
         float angleDeg = angleRad * Mathf.Rad2Deg;
 
         return angleDeg;
+    }
+
+    public virtual void FleeingBehaviour() {
+        if (nearPlayer)
+        {
+            enemyrb2d.velocity = directionAwayFromPlayer.normalized * 5;
+            transform.rotation = Quaternion.Euler(0, 0, angleFromPlayer + 180);
+        }
+        else
+        {
+            enemyrb2d.velocity = Vector2.zero;
+            transform.rotation = Quaternion.identity;
+        }
+    }
+
+    public virtual void ChasingBehaviour()
+    {
+        if (nearPlayer)
+        {
+            enemyrb2d.velocity = directionTowardPlayer.normalized * 5;
+            transform.rotation = Quaternion.Euler(0, 0, angleFromPlayer);
+        }
+        else
+        {
+            enemyrb2d.velocity = Vector2.zero;
+            transform.rotation = Quaternion.identity;
+        }
+    }
+
+    public virtual void NeutralBehaviour()
+    {
+        enemyrb2d.velocity = Vector2.zero;
+
+        if (nearPlayer)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, angleFromPlayer);
+        }
+        else
+        {
+            transform.rotation = Quaternion.identity;
+        }
+        /*        Vector2 directionTowardSpawnPos = (spawnPos - currEnemyPos).normalized;
+                float angleToSpawn = GetAngle(directionTowardSpawnPos);*
+
+
+                if (spawnPos == currEnemyPos)
+                {
+                    enemyrb2d.velocity = Vector2.zero;
+                    if (nearPlayer)
+                    {
+                        transform.rotation = Quaternion.Euler(0, 0, angleFromPlayer);
+                    }
+                    else
+                    {
+                        transform.rotation = Quaternion.identity;
+                    }
+                }
+                else {
+                    enemyrb2d.velocity = directionTowardSpawnPos;
+                    //transform.rotation = Quaternion.Euler(0, 0, angleToSpawn);
+                }*/
     }
 }
