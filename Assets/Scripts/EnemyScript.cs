@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
+    public int enemyLevel = 5;
+    
     Boolean nearPlayer = false;
     Rigidbody2D enemyrb2d;
     LevelManager levelManager;
@@ -40,9 +42,15 @@ public class EnemyScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        FleeingBehaviour();
-        //ChasingBehaviour();
-        //NeutralBehaviour();
+        if (levelManager.CheckLevel(enemyLevel))
+        {
+            FleeingBehaviour();
+        }
+        else { 
+            ChasingBehaviour();
+        }
+
+        //levelManager.CheckLevel(int level) returns true for both when the enemy level is higher AND for when it the SAME so can't ever be called using it NeutralBehaviour();
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
