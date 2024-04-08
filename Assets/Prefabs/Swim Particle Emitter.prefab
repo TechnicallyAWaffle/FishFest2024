@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6702326314599362886}
-  - component: {fileID: 5553240387130834703}
   - component: {fileID: 8439431761841984797}
   - component: {fileID: 7781286417618388466}
+  - component: {fileID: 275392607363450429}
   m_Layer: 0
   m_Name: Swim Particle Emitter
   m_TagString: Untagged
@@ -34,18 +34,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!114 &5553240387130834703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1797888872587350682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9766b19ff392c0c42a0c2f9143b7c649, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!198 &8439431761841984797
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4843,3 +4831,15 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &275392607363450429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797888872587350682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c51f70bbb657c324e9c89930c945b6b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
