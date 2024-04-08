@@ -26,13 +26,25 @@ public class Bite : MonoBehaviour
     // current bite timer
     [SerializeField] private float biteTimer;
 
+    //References
+    [SerializeField] private SpriteRenderer mouthSpriteRenderer;
+    private Sprite currentMouthSprite;
+
     void Awake()
     {
         levelManager = GetComponent<LevelManager>();
+        mouthSpriteRenderer.enabled = false;
+    }
+
+    public void UpdateMouthSprite(Sprite incomingMouthSprite)
+    {
+        currentMouthSprite = incomingMouthSprite;
+        mouthSpriteRenderer.sprite = currentMouthSprite;
     }
 
     public void StartBite()
     {
+        mouthSpriteRenderer.enabled = true;
         biteTimer = 0f;
         biting = true;
     }
@@ -40,7 +52,7 @@ public class Bite : MonoBehaviour
     public void StopBite()
     {
         biting = false;
-
+        mouthSpriteRenderer.enabled = false;
         // cap it to 1
         float biteLevel = math.min(biteTimer/maxBiteWindupTime, 1);
         Collider2D[] bittenColliders = new Collider2D[bittenBuffer]; 
@@ -86,5 +98,7 @@ public class Bite : MonoBehaviour
         if(!biting) return;
 
         biteTimer += Time.deltaTime;
+
+        mouthSpriteRenderer.transform.localScale = new Vector3(biteTimer, biteTimer);   
     }
 }
