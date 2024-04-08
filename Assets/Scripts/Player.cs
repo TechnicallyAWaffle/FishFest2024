@@ -8,8 +8,10 @@ public class Player : MonoBehaviour
 
     public SpriteRenderer BodySpriteRenderer;
     public Movement movementSystem;
+    public PelletShooter PelletShooter;
 
     public bool Invincible = false;
+    public bool Invisible = false;
 
     private void Awake()
     {
