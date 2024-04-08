@@ -49,11 +49,11 @@ public class MutationManager : MonoBehaviour
     public void UpdateMutation(IMutations incomingMutation)
     {
         Destroy(currentMutation);
-
         foreach (GameObject mutation in mutationList)
         {
             if (mutation.GetComponent<IMutations>().GetType() == incomingMutation.GetType())
             {
+                Player.Instance.gameObject.GetComponent<SpriteRenderer>().sprite = mutation.GetComponent<IMutations>().Sprite;
                 currentMutation = Instantiate(mutation, gameObject.transform);
             }
         }
