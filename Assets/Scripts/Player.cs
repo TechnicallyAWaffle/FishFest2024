@@ -6,7 +6,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class Player : MonoBehaviour
 {
   
-    public PheromoneCloudLogic pheromoneCloudPreFab;
+    public PheromoneCloudSpawnerLogic pSpawner;//Problematic
     public static Player Instance { get; private set; }
 
     public Movement movementSystem;
@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
     {
         if (context.performed)
         {
-            Instantiate(new PheromoneCloudLogic(), transform.position, Quaternion.identity);
+            pSpawner.spawnCloud();
         }
     }
 }

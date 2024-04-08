@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PheromoneCloudLogic : MonoBehaviour
+public class PheromoneCloud : MonoBehaviour
 {
     [SerializeField]
     private float cloudDuration = 2f;
@@ -35,6 +35,6 @@ public class PheromoneCloudLogic : MonoBehaviour
         cloudDuration -= cloudDecayRate * Time.deltaTime;
 
         if (cloudDuration <= fadeDuration) { Debug.Log("Cloud should be fading."); }
-        if (cloudDuration <= 0) { Destroy(gameObject); }
+        if (cloudDuration <= 0) { Destroy(gameObject); }//Problematic
     }
 }
