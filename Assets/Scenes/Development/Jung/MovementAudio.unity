@@ -251,7 +251,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 635986662}
   songs:
-  - {fileID: 0}
+  - audioClip: {fileID: 8300000, guid: 6676696629076c44c89381ca25c2defe, type: 3}
+    name: song1
+  - audioClip: {fileID: 8300000, guid: c0275a88b79a512498af0606191e87d0, type: 3}
+    name: song2
+  sounds:
+  - audioClip: {fileID: 8300000, guid: 087e1c4f12ba2ba4db198e1f8985816b, type: 3}
+    name: dash
+  - audioClip: {fileID: 8300000, guid: 6d7f7cb9b8d9afe49bfb26160da62181, type: 3}
+    name: eat
+  soundVolume: 1
+  musicVolume: 1
 --- !u!4 &635986664
 Transform:
   m_ObjectHideFlags: 0
