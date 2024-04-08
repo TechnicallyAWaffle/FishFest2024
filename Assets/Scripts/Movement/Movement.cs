@@ -11,7 +11,11 @@ public class Movement : MonoBehaviour
     float maxSpeed = 50f;
 
     [SerializeField]
+<<<<<<< HEAD:Assets/Scripts/Movement/Movement.cs
     float baseSwimSpeed = 15f;
+=======
+    float dashForce = 20f;
+>>>>>>> main:Assets/Scripts/Player/Movement.cs
 
     [SerializeField]
     float dashSpeed = 15f;
@@ -26,16 +30,27 @@ public class Movement : MonoBehaviour
     Transform bodySprite;
 
     Rigidbody2D rb2d;
+
     Vector2 mousePos;
+
     Vector2 mouseWorldPos;
+
     Vector2 mousePath;
+
     float mouseDistance;
+
     float mouseAngle;
 
+<<<<<<< HEAD:Assets/Scripts/Movement/Movement.cs
     private float currentSwimSpeed;
     bool isMoving = false;
 
     private void Awake()
+=======
+    bool isDashing = false;
+    float dashTimeElapsed = 0f;
+    private void Awake() 
+>>>>>>> main:Assets/Scripts/Player/Movement.cs
     {
         rb2d = GetComponent<Rigidbody2D>();
     }
@@ -101,7 +116,13 @@ public class Movement : MonoBehaviour
             bodySprite.rotation = Quaternion.Euler(0, 0, mouseAngle);
         } else
         {
+<<<<<<< HEAD:Assets/Scripts/Movement/Movement.cs
             HaltFish();
+=======
+            //A normalized vector preserves the direction of the original vector while reducing the magnitude to 1 or the smallest unit.
+            //The velocity of the rigid body is in the direction of the mousePath at the magnitude swimSpeed
+            rb2d.velocity = mousePath;//.normalized * swimSpeed; //<-- removal of this makes speed directly correlated to distance of mouse (i.e. slower closer, faster further)
+>>>>>>> main:Assets/Scripts/Player/Movement.cs
         }
     }
 
