@@ -13,7 +13,7 @@ TagManager:
   - Water
   - UI
   - Enemies
-  - 
+  - Pellet
   - 
   - 
   - 
@@ -41,4 +41,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Foreground
+    uniqueID: 2600371145
     locked: 0

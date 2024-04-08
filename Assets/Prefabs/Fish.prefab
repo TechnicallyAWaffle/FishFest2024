@@ -417,7 +417,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f8c418fbbd5aa478ee4f5ea396020a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BodySpriteRenderer: {fileID: 3032701530072854117}
   movementSystem: {fileID: 6061269763034925091}
+  PelletShooter: {fileID: 2457926671984677694}
+  Invincible: 0
+  Invisible: 0
   bite: {fileID: 45119485230076893}
 --- !u!114 &6061269763034925091
 MonoBehaviour:
@@ -506,6 +510,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4459964987777564100
 SpriteRenderer:
+>>>>>>> main
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}

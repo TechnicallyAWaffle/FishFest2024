@@ -7,8 +7,11 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    public int enemyLevel;
+    [SerializeField]
+    protected MutationBase mutationReward;
     
+	public int enemyLevel = 5;
+	
     Boolean nearPlayer = false;
     Rigidbody2D enemyrb2d;
     Transform playerTransform;
@@ -38,6 +41,12 @@ public class EnemyScript : MonoBehaviour
         enemyLevel = 1;
     }
 
+    private void Start()
+    {
+        Debug.Log("TODO: Gets assigned mutation on start, change to when eaten");
+        MutationManager.Instance.UpdateMutation(mutationReward);
+    }
+
     public void SetupEnemy(bool isAlpha, int enemyLevel)
     {
         this.isAlpha = isAlpha;
@@ -51,7 +60,6 @@ public class EnemyScript : MonoBehaviour
         enemyLevel = 999;
         gameObject.transform.localScale = new Vector3(2, 2); //This will be bigger later
     }
-
 
     // Update is called once per frame
     void Update()

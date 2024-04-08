@@ -1,3 +1,4 @@
+
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -24,6 +25,8 @@ public class Movement : MonoBehaviour
 
     [SerializeField]
     Transform bodySprite;
+
+    public bool IsMoving => isMoving;
 
     Rigidbody2D rb2d;
 
@@ -58,6 +61,7 @@ public class Movement : MonoBehaviour
 
     private void SwimTowardsMouse()
     {
+        rb2d.angularVelocity = 0;
         rb2d.velocity = mousePath.normalized * currentSwimSpeed;
     }
 

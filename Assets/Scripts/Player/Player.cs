@@ -12,7 +12,13 @@ public class Player : MonoBehaviour
     // Main Scene
     public Movement movementSystem;
     public Bite bite;
+    public PelletShooter PelletShooter;
+	
     public GameObject player;
+	public SpriteRenderer BodySpriteRenderer;
+	
+    public bool Invincible = false;
+    public bool Invisible = false;	
 
     private void Awake()
     {
@@ -31,6 +37,7 @@ public class Player : MonoBehaviour
     {
         if (movementSystem == null) return;
         movementSystem.GameUpdate();
+        MutationManager.Instance.TickCurrentPassive();
         bite.GameUpdate();
     }
 
@@ -72,7 +79,7 @@ public class Player : MonoBehaviour
     {
         if (context.performed)
         {
-            // Here
+            MutationManager.Instance.ActivateCurrentAbility();
         }
     }
 
