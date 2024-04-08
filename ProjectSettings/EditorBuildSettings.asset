@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Intro.unity
+    path: Assets/Scenes/_FinalGame/Intro.unity
     guid: 9e6345f4ae18cfc428a107a244c47d14
   - enabled: 1
-    path: Assets/Scenes/Development/feature-enemysystem/sample.unity
+    path: Assets/Scenes/_FinalGame/Game.unity
     guid: 88cb5f58c7ed3254791d09bb5b841881
   m_configObjects: {}

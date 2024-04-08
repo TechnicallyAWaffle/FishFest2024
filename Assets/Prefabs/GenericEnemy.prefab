@@ -536,11 +536,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2841481473081210626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa34bb83b5cc2ec468431520ff35321d, type: 3}
+  m_Script: {fileID: 11500000, guid: 42acfd19de80ed74688262ddde9648d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mutationReward: {fileID: 0}
   enemyLevel: 5
-  mutationReward: {fileID: 6531462231435135173, guid: f10c99a2b66384941b7b409b8dc272aa, type: 3}
+  defaultSpeed: 0
+  isAlpha: 0
+  isInvincible: 0
 --- !u!58 &8637407770462738414
 CircleCollider2D:
   m_ObjectHideFlags: 0
