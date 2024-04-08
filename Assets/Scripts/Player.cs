@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         movementSystem.GameUpdate();
+        MutationManager.Instance.TickCurrentPassive();
     }
 
     private void FixedUpdate()
@@ -56,7 +57,7 @@ public class Player : MonoBehaviour
     {
         if (context.performed)
         {
-            // Here
+            MutationManager.Instance.ActivateCurrentAbility();
         }
     }
 }
