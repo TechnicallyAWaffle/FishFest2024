@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
 public class Player : MonoBehaviour
 {
+  
+    public PheromoneCloudSpawnerLogic pSpawner;//Problematic
     public static Player Instance { get; private set; }
 
     // Intro Scene
@@ -61,7 +64,7 @@ public class Player : MonoBehaviour
             movementSystem.SetMovementState(true);
         }
 
-        if(context.canceled)
+        if (context.canceled)
         {
             movementSystem.SetMovementState(false);
         }*/
@@ -82,6 +85,14 @@ public class Player : MonoBehaviour
             MutationManager.Instance.ActivateCurrentAbility();
         }
     }
+
+    public void DeployPheromone(CallbackContext context)
+    {
+        if (context.performed)
+        {
+            pSpawner.spawnCloud();
+        }
+	}
 
     // routes press RMB and release RMB to bite script on player 
     public void Bite(CallbackContext context)

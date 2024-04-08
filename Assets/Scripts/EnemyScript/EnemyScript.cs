@@ -180,6 +180,9 @@ public class EnemyScript : MonoBehaviour
             float newTime = UnityEngine.Random.Range(2, 10);
             time = newTime;
         }
+    }
 
+    public virtual void PheromoneReaction() {
+        Debug.Log("Enemy in Pheromones");
     }
 }
