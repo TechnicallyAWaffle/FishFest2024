@@ -9,7 +9,19 @@ public class Player : MonoBehaviour
     public PheromoneCloudSpawnerLogic pSpawner;//Problematic
     public static Player Instance { get; private set; }
 
+    // Intro Scene
+    public IntroManager introManager;
+
+    // Main Scene
     public Movement movementSystem;
+    public Bite bite;
+    public PelletShooter PelletShooter;
+	
+    public GameObject player;
+	public SpriteRenderer BodySpriteRenderer;
+	
+    public bool Invincible = false;
+    public bool Invisible = false;	
 
     private void Awake()
     {
@@ -26,17 +38,28 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (movementSystem == null) return;
         movementSystem.GameUpdate();
+        MutationManager.Instance.TickCurrentPassive();
+        bite.GameUpdate();
     }
 
     private void FixedUpdate()
     {
+        if (movementSystem == null) return;
         movementSystem.GameFixedUpdate();
     }
 
     public void MovementAction(CallbackContext context)
     {
-        if (context.started)
+        if (context.performed)
+        {
+            if (introManager == null) return;
+            introManager.NextScene();
+        }
+        
+
+        /*if (context.started)
         {
             movementSystem.SetMovementState(true);
         }
@@ -44,7 +67,7 @@ public class Player : MonoBehaviour
         if (context.canceled)
         {
             movementSystem.SetMovementState(false);
-        }
+        }*/
     }
 
     public void AbilityKey1(CallbackContext context)
@@ -59,7 +82,7 @@ public class Player : MonoBehaviour
     {
         if (context.performed)
         {
-            // Here
+            MutationManager.Instance.ActivateCurrentAbility();
         }
     }
 
@@ -69,5 +92,13 @@ public class Player : MonoBehaviour
         {
             pSpawner.spawnCloud();
         }
+	}
+
+    // routes press RMB and release RMB to bite script on player 
+    public void Bite(CallbackContext context)
+    {
+        if(context.started) bite.StartBite();
+        else if(context.canceled) bite.StopBite();
+        // ignore context.performed  lmaoooo
     }
 }

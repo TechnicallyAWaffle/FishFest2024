@@ -1,3 +1,4 @@
+
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,7 +9,7 @@ public class Movement : MonoBehaviour
     SwimParticleEmitter swimParticleEmitterPrefab;
 
     [SerializeField]
-    float maxSpeed = 50f;
+    public float maxSpeed = 50f;
 
     [SerializeField]
     float baseSwimSpeed = 15f;
@@ -25,6 +26,8 @@ public class Movement : MonoBehaviour
     [SerializeField]
     Transform bodySprite;
 
+    public bool IsMoving => isMoving;
+
     Rigidbody2D rb2d;
 
     Vector2 mousePos;
@@ -38,7 +41,7 @@ public class Movement : MonoBehaviour
     float mouseAngle;
 
     private float currentSwimSpeed;
-    bool isMoving = false;
+    bool isMoving = true;
 
     private void Awake()
     {
@@ -58,6 +61,7 @@ public class Movement : MonoBehaviour
 
     private void SwimTowardsMouse()
     {
+        rb2d.angularVelocity = 0;
         rb2d.velocity = mousePath.normalized * currentSwimSpeed;
     }
 
