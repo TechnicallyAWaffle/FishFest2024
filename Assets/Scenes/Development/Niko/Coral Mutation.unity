@@ -531,10 +531,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fish
       objectReference: {fileID: 0}
-    - target: {fileID: 4338066180269475695, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.98
-      objectReference: {fileID: 0}
     - target: {fileID: 9005058402747248086, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
