@@ -188,7 +188,7 @@ Transform:
   m_GameObject: {fileID: 108355117}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0000009536743, y: 0.0000011920929, z: -10}
+  m_LocalPosition: {x: 152.80945, y: -4.09886, z: -1.5860739}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -212,9 +212,17 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 45119485230076893, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
+      propertyPath: bittenBuffer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 45119485230076893, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
       propertyPath: maxBiteWindupTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 45119485230076893, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
+      propertyPath: mouthSpriteRenderer
+      value: 
+      objectReference: {fileID: 1226414775}
     - target: {fileID: 45119485230076893, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
       propertyPath: randomEatXPLowerBound
       value: 25
@@ -226,6 +234,18 @@ PrefabInstance:
     - target: {fileID: 1584152977349063748, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
       propertyPath: m_Name
       value: Fish
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459964987777564100, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 85b669e0bfce110428686cbdf21e8c81, type: 3}
+    - target: {fileID: 4459964987777564100, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7739110366528467654, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8106119497571664424, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
       propertyPath: levelRandomLowerBound
@@ -511,6 +531,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d23221f0c451f479e6fc3e999530d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!212 &1226414775 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4459964987777564100, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
+  m_PrefabInstance: {fileID: 146755681}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1337923765
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,7 +600,7 @@ Transform:
   m_GameObject: {fileID: 1337923765}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -152.80945, y: 4.0988607, z: -8.413926}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -904,11 +929,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7542668682067066216, guid: baeaf845f0e73c84c8ad601c6b35f033, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -6.295
       objectReference: {fileID: 0}
     - target: {fileID: 7542668682067066216, guid: baeaf845f0e73c84c8ad601c6b35f033, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.499
       objectReference: {fileID: 0}
     - target: {fileID: 7542668682067066216, guid: baeaf845f0e73c84c8ad601c6b35f033, type: 3}
       propertyPath: m_LocalPosition.z

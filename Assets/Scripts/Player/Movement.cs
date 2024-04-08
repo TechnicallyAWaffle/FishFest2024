@@ -9,7 +9,7 @@ public class Movement : MonoBehaviour
     SwimParticleEmitter swimParticleEmitterPrefab;
 
     [SerializeField]
-    float maxSpeed = 50f;
+    public float maxSpeed = 50f;
 
     [SerializeField]
     float baseSwimSpeed = 15f;
@@ -41,7 +41,7 @@ public class Movement : MonoBehaviour
     float mouseAngle;
 
     private float currentSwimSpeed;
-    bool isMoving = false;
+    bool isMoving = true;
 
     private void Awake()
     {

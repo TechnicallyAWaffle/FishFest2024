@@ -6,9 +6,12 @@ using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] private GameObject dialoguePanel;
+    [SerializeField] private GameObject playerDialoguePanel;
+    [SerializeField] private TextMeshProUGUI playerDialogueText;
 
-    [SerializeField] private TextMeshProUGUI dialogueText;
+    public GameObject enemyDialoguePanel;
+    public GameObject enemyDialogueText;
+
 
     [SerializeField] private TextAsset dialogue;
 
@@ -38,25 +41,17 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
     }
 
-    private void Start()
-    {
-        EnterDialogueMode();
-    }
-
-
     public void EnterDialogueMode()
     {
         currentStory = new Story(dialogue.text);
-        dialogueIsPlaying = true;
-        dialoguePanel.SetActive(true);
         ContinueStory();
     }
 
     private void ExitDialogueMode()
     {
         dialogueIsPlaying = false;
-        dialoguePanel.SetActive(false);
-        dialogueText.text = "";
+        //dialoguePanel.SetActive(false);
+       // dialogueText.text = "";
         currentStory.UnbindExternalFunction("SetSpeaker");
         currentSpeaker = "";
     }
@@ -71,8 +66,8 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentStory.canContinue)
         {
-            dialogueText.text = currentStory.Continue();
-            Debug.Log(currentStory.currentTags);
+            //if(currentSpeaker)
+            //dialogueText.text = currentStory.Continue();
             if (currentStory.currentTags[0] != currentSpeaker)
             {
                 currentSpeaker = currentStory.currentTags[0];
