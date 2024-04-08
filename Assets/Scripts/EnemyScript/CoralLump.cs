@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Coral : EnemyScript
+public class CoralLump: EnemyScript
 {
     private float currentTime = 5;
     private float targetTime = 5;
-    public bool isInvincible = false;
 
     public override void ChasingBehaviour()
     {

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
@@ -10,7 +11,6 @@ public class EnemyScript : MonoBehaviour
     
     Boolean nearPlayer = false;
     Rigidbody2D enemyrb2d;
-    LevelManager levelManager;
     Transform playerTransform;
     Vector2 playerPos;
     Vector2 currEnemyPos;
@@ -18,10 +18,11 @@ public class EnemyScript : MonoBehaviour
     float angleFromPlayer;
     Vector2 directionTowardPlayer;
     Vector2 directionAwayFromPlayer;
-    [SerializeField] private float defaultSpeed;
-    private float speed;
+    [SerializeField] protected float defaultSpeed;
+    protected float speed;
     protected bool pheromoned;
     public bool isAlpha = false;
+    public bool isInvincible = false;
 
     //Timer variables
     private float time = 5;
@@ -29,11 +30,12 @@ public class EnemyScript : MonoBehaviour
     private void Awake()
     {
         enemyrb2d = GetComponent<Rigidbody2D>();
-        levelManager = GameObject.FindObjectOfType<LevelManager>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         spawnPos = new(transform.position.x, transform.position.y);
         speed = defaultSpeed;
         pheromoned = false;
+        //testing
+        enemyLevel = 1;
     }
 
     public void SetupEnemy(bool isAlpha, int enemyLevel)
@@ -65,21 +67,30 @@ public class EnemyScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        NeutralBehaviour();
-        if (nearPlayer && levelManager.CheckLevel(enemyLevel))
+        
+        if (nearPlayer)
         {
-            if(pheromoned)
-                ChasingBehaviour();
+            if (LevelManager.Instance.CheckLevel(enemyLevel))
+            {
+                Debug.Log("Near player and player level higher");
+                if (pheromoned)
+                    ChasingBehaviour();
+                else
+                    FleeingBehaviour();
+            }
             else
-                FleeingBehaviour();
+            {
+                Debug.Log("Near player and player level is lower");
+                if (pheromoned)
+                    FleeingBehaviour();
+                else
+                    ChasingBehaviour();
+            }
         }
-        else {
-            if (pheromoned)
-                FleeingBehaviour();
-            else
-                ChasingBehaviour();
+        else
+        {
+            NeutralBehaviour();
         }
-
         //levelManager.CheckLevel(int level) returns true for both when the enemy level is higher AND for when it the SAME so can't ever be called using it NeutralBehaviour();
     }
     private void OnTriggerStay2D(Collider2D collision)
