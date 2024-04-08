@@ -38,7 +38,7 @@ public class Movement : MonoBehaviour
     float mouseAngle;
 
     private float currentSwimSpeed;
-    bool isMoving = false;
+    bool isMoving = true;
 
     private void Awake()
     {
