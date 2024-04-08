@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9005058402747248086}
   - component: {fileID: 8662998400257936114}
+  - component: {fileID: 3453870424385660614}
   - component: {fileID: 4487310474683871449}
   - component: {fileID: 2979972273971974781}
   - component: {fileID: 8997512086264262961}
@@ -146,18 +147,10 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 596ec1de-fbe8-4585-8f07-4569a32283f8
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: a82d1b67-3120-4b57-98aa-ebe19e9e030c
-    m_ActionName: Player/Look[/Mouse/delta,/Touchscreen/delta,/Pen/delta]
-  - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4487310474683871449}
-        m_TargetAssemblyTypeName: Movement, Assembly-CSharp
-        m_MethodName: Dash
+      - m_Target: {fileID: 3453870424385660614}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: MovementAction
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -209,11 +202,56 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: e6b82ef6-3fca-43b6-af74-837de0bdfec4
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3453870424385660614}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: AbilityKey1
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 54851e1f-4e54-46b7-993b-c13ad3081dcd
+    m_ActionName: Player/Ability 1[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3453870424385660614}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: AbilityKey2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0a70d54b-6f7e-4109-ba07-bb0f789cf8b5
+    m_ActionName: Player/Ability 2[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &3453870424385660614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584152977349063748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f8c418fbbd5aa478ee4f5ea396020a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSystem: {fileID: 4487310474683871449}
 --- !u!114 &4487310474683871449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,9 +265,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swimParticleEmitterPrefab: {fileID: 5553240387130834703, guid: 5f5ee18a9fceb544f925dfc02613dcca, type: 3}
-  swimSpeed: 15
-  dashForce: 5
-  dashTime: 0.25
+  maxSpeed: 50
+  baseSwimSpeed: 15
+  dashSpeed: 15
+  dashDecayRate: 50
+  distanceToMouse: 2
   bodySprite: {fileID: 2896960952941617890}
 --- !u!50 &2979972273971974781
 Rigidbody2D:
