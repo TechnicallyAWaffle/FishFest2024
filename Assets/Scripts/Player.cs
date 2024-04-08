@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
 
     // Main Scene
     public Movement movementSystem;
+    public Bite bite;
     public GameObject player;
 
     private void Awake()
@@ -30,6 +31,7 @@ public class Player : MonoBehaviour
     {
         if (movementSystem == null) return;
         movementSystem.GameUpdate();
+        bite.GameUpdate();
     }
 
     private void FixedUpdate()
@@ -72,5 +74,13 @@ public class Player : MonoBehaviour
         {
             // Here
         }
+    }
+
+    // routes press RMB and release RMB to bite script on player 
+    public void Bite(CallbackContext context)
+    {
+        if(context.started) bite.StartBite();
+        else if(context.canceled) bite.StopBite();
+        // ignore context.performed  lmaoooo
     }
 }
