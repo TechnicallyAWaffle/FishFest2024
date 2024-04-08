@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 8997512086264262961}
   - component: {fileID: 3453870424385660614}
   - component: {fileID: 6061269763034925091}
+  - component: {fileID: 8106119497571664424}
   m_Layer: 3
   m_Name: Fish
   m_TagString: Player
@@ -326,10 +327,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdec859341a74b44091a0e1159e855b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swimParticleEmitterPrefab: {fileID: 0}
+  swimParticleEmitterPrefab: {fileID: 275392607363450429, guid: 5f5ee18a9fceb544f925dfc02613dcca, type: 3}
   maxSpeed: 50
   baseSwimSpeed: 15
   dashSpeed: 15
   dashDecayRate: 50
   distanceToMouse: 2
-  bodySprite: {fileID: 0}
+  bodySprite: {fileID: 2896960952941617890}
+--- !u!114 &8106119497571664424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584152977349063748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de1aff38563e8bf4899c5f5372a1886e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
