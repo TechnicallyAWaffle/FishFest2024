@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.InputSystem.InputAction;
 
 public class Movement : MonoBehaviour
 {
@@ -16,7 +13,10 @@ public class Movement : MonoBehaviour
     float dashForce = 5f;
 
     [SerializeField]
-    float dashTime = 0.25f;
+    float dashCooldown = 0.25f;
+
+    [SerializeField]
+    float distanceToMouse = 2f;
 
     [SerializeField]
     Transform bodySprite;
@@ -28,6 +28,7 @@ public class Movement : MonoBehaviour
     float mouseDistance;
     float mouseAngle;
 
+    bool isMoving = false;
     bool isDashing = false;
     float dashTimeElapsed = 0f;
 
@@ -36,43 +37,9 @@ public class Movement : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
-    {
-        mousePos = Mouse.current.position.ReadValue();
-        mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
-
-        Vector2 playerPos = new(transform.position.x, transform.position.y);
-
-        mousePath = mouseWorldPos - playerPos;
-        mouseDistance = Vector2.Distance(playerPos, mouseWorldPos);
-        mouseAngle = GetAngleToMouse(mousePath);
-    }
-
-    private void FixedUpdate()
-    {
-        Debug.Log(mouseDistance);
-
-        if (IsAwayFromMouse())
-        {
-            SwimTowardsMouse();
-            bodySprite.rotation = Quaternion.Euler(0, 0, mouseAngle);
-        }
-        else
-        {
-            HaltFish();
-            bodySprite.rotation = Quaternion.identity;
-        }
-
-        dashTimeElapsed += Time.deltaTime;
-        if (dashTimeElapsed > dashTime)
-        {
-            isDashing = false;
-        }
-    }
-
     private bool IsAwayFromMouse()
     {
-        return mouseDistance > 0.25f;
+        return mouseDistance > distanceToMouse;
     }
 
     private void HaltFish()
@@ -88,9 +55,51 @@ public class Movement : MonoBehaviour
         }
     }
 
-    public void Dash(CallbackContext context)
+    private float GetAngleToMouse(Vector2 direction)
     {
-        if (context.performed && IsAwayFromMouse())
+        float angleRad = Mathf.Atan2(direction.y, direction.x);
+        float angleDeg = angleRad * Mathf.Rad2Deg;
+
+        return angleDeg;
+    }
+
+    public void GameUpdate()
+    {
+        if (!isMoving) return;
+
+        mousePos = Mouse.current.position.ReadValue();
+        mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        Vector2 playerPos = new(transform.position.x, transform.position.y);
+
+        mousePath = mouseWorldPos - playerPos;
+        mouseDistance = Vector2.Distance(playerPos, mouseWorldPos);
+        mouseAngle = GetAngleToMouse(mousePath);
+    }
+
+    public void GameFixedUpdate()
+    {
+        if (!isMoving) return;
+
+        if (IsAwayFromMouse())
+        {
+            SwimTowardsMouse();
+            bodySprite.rotation = Quaternion.Euler(0, 0, mouseAngle);
+        } else
+        {
+            HaltFish();
+        }
+
+        dashTimeElapsed += Time.deltaTime;
+        if (dashTimeElapsed > dashCooldown)
+        {
+            isDashing = false;
+        }
+    }
+
+    public void Dash()
+    {
+        if (isMoving && IsAwayFromMouse())
         {
             isDashing = true;
             dashTimeElapsed = 0f;
@@ -103,11 +112,13 @@ public class Movement : MonoBehaviour
         }
     }
 
-    private float GetAngleToMouse(Vector2 direction)
+    public void SetMovementState(bool state)
     {
-        float angleRad = Mathf.Atan2(direction.y, direction.x);
-        float angleDeg = angleRad * Mathf.Rad2Deg;
+        isMoving = state;
 
-        return angleDeg;
+        if (isMoving == false)
+        {
+            HaltFish();
+        }
     }
 }
