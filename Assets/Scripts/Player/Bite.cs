@@ -14,6 +14,8 @@ public class Bite : MonoBehaviour
     [SerializeField] private float maxBiteWindupTime;
     // radius of bite around player
     [SerializeField] private float biteRadius;
+    // buffer limit for bitten colliders
+    [SerializeField] private int bittenBuffer;
     
     // reference variabl lol
     private LevelManager levelManager;
@@ -41,18 +43,15 @@ public class Bite : MonoBehaviour
 
         // cap it to 1
         float biteLevel = math.min(biteTimer/maxBiteWindupTime, 1);
-        Collider2D[] bittenColliders = new Collider2D[0]; 
-        bittenColliders = new Collider2D[Physics2D.OverlapCircleNonAlloc(transform.position, biteRadius, bittenColliders)];
-        Debug.DrawRay(transform.position, biteRadius * Vector3.right, Color.red, 1f);
-        Debug.DrawRay(transform.position, biteRadius * Vector3.left, Color.red, 1f);
-        Debug.DrawRay(transform.position, biteRadius * Vector3.up, Color.red, 1f);
-        Debug.DrawRay(transform.position, biteRadius * Vector3.down, Color.red, 1f);
+        Collider2D[] bittenColliders = new Collider2D[bittenBuffer]; 
+
+        // temporarily disable triggers so we don't eated it twice
+        Physics2D.queriesHitTriggers = false;
+        Physics2D.OverlapCircleNonAlloc(transform.position, biteRadius, bittenColliders);
+        Physics2D.queriesHitTriggers = true;
 
         foreach(Collider2D collider in bittenColliders)
-        {
-            Debug.Log(collider.gameObject.name);
-            TryBite(collider, biteLevel);
-        }
+            if(collider != null) TryBite(collider, biteLevel);
             
     }
 

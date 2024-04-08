@@ -26,38 +26,49 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        playerLevel = 1;
         if (instance != null)
             Debug.LogError("More than one MutationManager in scene");
         instance = this;
+
+        // initial value of variables
+        playerLevel = 1;
+        UpdateXpRequirement();
     }
 
     public bool CheckLevel(int levelToCompare) 
     {
-        if (playerLevel >= levelToCompare)
-            return true;
-        else
-            return false;
+        return playerLevel >= levelToCompare ? true : false;
+    }
+
+    public void AddXp(float amount)
+    {
+        currentXp += amount;
+        // Debug.Log("Level " + playerLevel);
+        // Debug.Log("Added xp " + amount + ", xp requirement " + xpRequirement);
+        LevelIfPossible();
+        // Debug.Log("Level " + playerLevel);
     }
 
     public void LevelUp()
     {
         playerLevel += 1;
         currentXp -= xpRequirement;
-        xpRequirement = (playerLevel+1)*(UnityEngine.Random.Range(levelRandomLowerBound, levelRandomUpperBound));
+        UpdateXpRequirement();
 
-        levelUpEvent();
+        levelUpEvent?.Invoke();
     }
 
-    public void AddXp(float amount)
+    private void UpdateXpRequirement()
     {
-        currentXp += amount;
-        Debug.Log("Added xp " + amount + ", xp requirement " + xpRequirement);
-        LevelIfPossible();
+        xpRequirement = (playerLevel+1)*UnityEngine.Random.Range(levelRandomLowerBound, levelRandomUpperBound);
     }
 
     private void LevelIfPossible()
     {
-        if(currentXp >= xpRequirement) LevelUp();
+        if(currentXp >= xpRequirement) 
+        {
+            LevelUp();
+            LevelIfPossible(); // in case we level up multiple times at once i guess
+        }
     }
 }
