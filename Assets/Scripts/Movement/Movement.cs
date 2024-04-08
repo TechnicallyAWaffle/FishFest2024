@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,13 +8,16 @@ public class Movement : MonoBehaviour
     SwimParticleEmitter swimParticleEmitterPrefab;
 
     [SerializeField]
-    float swimSpeed = 15f;
+    float maxSpeed = 50f;
 
     [SerializeField]
-    float dashForce = 5f;
+    float baseSwimSpeed = 15f;
 
     [SerializeField]
-    float dashCooldown = 0.25f;
+    float dashSpeed = 15f;
+
+    [SerializeField]
+    float dashDecayRate = 50f;
 
     [SerializeField]
     float distanceToMouse = 2f;
@@ -28,9 +32,8 @@ public class Movement : MonoBehaviour
     float mouseDistance;
     float mouseAngle;
 
+    private float currentSwimSpeed;
     bool isMoving = false;
-    bool isDashing = false;
-    float dashTimeElapsed = 0f;
 
     private void Awake()
     {
@@ -45,14 +48,12 @@ public class Movement : MonoBehaviour
     private void HaltFish()
     {
         rb2d.velocity = Vector2.zero;
+        currentSwimSpeed = 0f;
     }
 
     private void SwimTowardsMouse()
     {
-        if (!isDashing)
-        {
-            rb2d.velocity = mousePath.normalized * swimSpeed;
-        }
+        rb2d.velocity = mousePath.normalized * currentSwimSpeed;
     }
 
     private float GetAngleToMouse(Vector2 direction)
@@ -75,6 +76,19 @@ public class Movement : MonoBehaviour
         mousePath = mouseWorldPos - playerPos;
         mouseDistance = Vector2.Distance(playerPos, mouseWorldPos);
         mouseAngle = GetAngleToMouse(mousePath);
+
+        UpdateSwimSpeed();
+    }
+
+    private void UpdateSwimSpeed()
+    {
+        currentSwimSpeed -= dashDecayRate * Time.deltaTime;
+        if (currentSwimSpeed <= baseSwimSpeed)
+        {
+            currentSwimSpeed = baseSwimSpeed;
+        }
+
+        currentSwimSpeed = Mathf.Clamp(currentSwimSpeed, baseSwimSpeed, maxSpeed);
     }
 
     public void GameFixedUpdate()
@@ -89,23 +103,13 @@ public class Movement : MonoBehaviour
         {
             HaltFish();
         }
-
-        dashTimeElapsed += Time.deltaTime;
-        if (dashTimeElapsed > dashCooldown)
-        {
-            isDashing = false;
-        }
     }
 
     public void Dash()
     {
         if (isMoving && IsAwayFromMouse())
         {
-            isDashing = true;
-            dashTimeElapsed = 0f;
-
-            rb2d.AddForce(mousePath.normalized * dashForce, ForceMode2D.Impulse);
-
+            currentSwimSpeed += dashSpeed;
             SwimParticleEmitter swimEmitter = Instantiate(swimParticleEmitterPrefab, transform.position, Quaternion.identity);
             swimEmitter.EmitAwayFromDirection(mouseAngle);
             swimEmitter.SelfDestructInASecond();
