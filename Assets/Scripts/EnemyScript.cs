@@ -115,25 +115,9 @@ public class EnemyScript : MonoBehaviour
         {
             transform.rotation = Quaternion.identity;
         }
-        /*        Vector2 directionTowardSpawnPos = (spawnPos - currEnemyPos).normalized;
-                float angleToSpawn = GetAngle(directionTowardSpawnPos);*
+    }
 
-
-                if (spawnPos == currEnemyPos)
-                {
-                    enemyrb2d.velocity = Vector2.zero;
-                    if (nearPlayer)
-                    {
-                        transform.rotation = Quaternion.Euler(0, 0, angleFromPlayer);
-                    }
-                    else
-                    {
-                        transform.rotation = Quaternion.identity;
-                    }
-                }
-                else {
-                    enemyrb2d.velocity = directionTowardSpawnPos;
-                    //transform.rotation = Quaternion.Euler(0, 0, angleToSpawn);
-                }*/
+    public virtual void PheromoneReaction() {
+        Debug.Log("Enemy in Pheromones");
     }
 }

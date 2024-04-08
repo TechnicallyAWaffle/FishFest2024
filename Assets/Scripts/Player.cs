@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
 public class Player : MonoBehaviour
 {
+  
+    public PheromoneCloudLogic pheromoneCloudPreFab;
     public static Player Instance { get; private set; }
 
     public Movement movementSystem;
@@ -38,7 +41,7 @@ public class Player : MonoBehaviour
             movementSystem.SetMovementState(true);
         }
 
-        if(context.canceled)
+        if (context.canceled)
         {
             movementSystem.SetMovementState(false);
         }
@@ -57,6 +60,14 @@ public class Player : MonoBehaviour
         if (context.performed)
         {
             // Here
+        }
+    }
+
+    public void DeployPheromone(CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Instantiate(new PheromoneCloudLogic(), transform.position, Quaternion.identity);
         }
     }
 }
