@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public static Player Instance { get; private set; }
 
     public Movement movementSystem;
+    public Bite bite;
 
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         movementSystem.GameUpdate();
+        bite.GameUpdate();
     }
 
     private void FixedUpdate()
@@ -58,5 +60,13 @@ public class Player : MonoBehaviour
         {
             // Here
         }
+    }
+
+    // routes press RMB and release RMB to bite script on player 
+    public void Bite(CallbackContext context)
+    {
+        if(context.started) bite.StartBite();
+        else if(context.canceled) bite.StopBite();
+        // ignore context.performed  lmaoooo
     }
 }

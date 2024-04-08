@@ -203,9 +203,37 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 45119485230076893, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
+      propertyPath: maxBitten
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 45119485230076893, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
+      propertyPath: biteRadius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 45119485230076893, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
+      propertyPath: maxBiteWindupTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 45119485230076893, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
+      propertyPath: randomEatXPLowerBound
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 45119485230076893, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
+      propertyPath: randomEatXPUpperBound
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 1584152977349063748, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
       propertyPath: m_Name
       value: Fish
+      objectReference: {fileID: 0}
+    - target: {fileID: 8106119497571664424, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
+      propertyPath: levelRandomLowerBound
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8106119497571664424, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
+      propertyPath: levelRandomUpperBound
+      value: 115
       objectReference: {fileID: 0}
     - target: {fileID: 9005058402747248086, guid: 6069d23d59b9f8641b62bf375f81a2e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -620,6 +648,10 @@ PrefabInstance:
     - target: {fileID: 4217195716932657889, guid: 4698df0f49b133941a9f59e3789f07c8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5486165359137432332, guid: 4698df0f49b133941a9f59e3789f07c8, type: 3}
+      propertyPath: enemyLevel
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
