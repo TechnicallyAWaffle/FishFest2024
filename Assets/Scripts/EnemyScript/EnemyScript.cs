@@ -2,15 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    public int enemyLevel = 5;
+    public int enemyLevel;
     
     Boolean nearPlayer = false;
     Rigidbody2D enemyrb2d;
-    LevelManager levelManager;
     Transform playerTransform;
     Vector2 playerPos;
     Vector2 currEnemyPos;
@@ -18,13 +18,40 @@ public class EnemyScript : MonoBehaviour
     float angleFromPlayer;
     Vector2 directionTowardPlayer;
     Vector2 directionAwayFromPlayer;
+    [SerializeField] protected float defaultSpeed;
+    protected float speed;
+    protected bool pheromoned;
+    public bool isAlpha = false;
+    public bool isInvincible = false;
+
+    //Timer variables
+    private float time = 5;
+
     private void Awake()
     {
         enemyrb2d = GetComponent<Rigidbody2D>();
-        levelManager = GameObject.FindObjectOfType<LevelManager>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         spawnPos = new(transform.position.x, transform.position.y);
+        speed = defaultSpeed;
+        pheromoned = false;
+        //testing
+        enemyLevel = 1;
     }
+
+    public void SetupEnemy(bool isAlpha, int enemyLevel)
+    {
+        this.isAlpha = isAlpha;
+        this.enemyLevel = enemyLevel;
+        if (this.isAlpha)
+            BecomeAlpha();
+    }
+
+    private void BecomeAlpha()
+    {
+        enemyLevel = 999;
+        gameObject.transform.localScale = new Vector3(2, 2); //This will be bigger later
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -36,20 +63,34 @@ public class EnemyScript : MonoBehaviour
         directionAwayFromPlayer = currEnemyPos - playerPos;
 
         angleFromPlayer = GetAngle(directionAwayFromPlayer);
-
-
     }
 
     private void FixedUpdate()
     {
-        if (levelManager.CheckLevel(enemyLevel))
+        
+        if (nearPlayer)
         {
-            FleeingBehaviour();
+            if (LevelManager.Instance.CheckLevel(enemyLevel))
+            {
+                Debug.Log("Near player and player level higher");
+                if (pheromoned)
+                    ChasingBehaviour();
+                else
+                    FleeingBehaviour();
+            }
+            else
+            {
+                Debug.Log("Near player and player level is lower");
+                if (pheromoned)
+                    FleeingBehaviour();
+                else
+                    ChasingBehaviour();
+            }
         }
-        else { 
-            ChasingBehaviour();
+        else
+        {
+            NeutralBehaviour();
         }
-
         //levelManager.CheckLevel(int level) returns true for both when the enemy level is higher AND for when it the SAME so can't ever be called using it NeutralBehaviour();
     }
     private void OnTriggerStay2D(Collider2D collision)
@@ -79,7 +120,7 @@ public class EnemyScript : MonoBehaviour
     public virtual void FleeingBehaviour() {
         if (nearPlayer)
         {
-            enemyrb2d.velocity = directionAwayFromPlayer.normalized * 5;
+            enemyrb2d.velocity = directionAwayFromPlayer.normalized * speed;
             transform.rotation = Quaternion.Euler(0, 0, angleFromPlayer + 180);
         }
         else
@@ -93,7 +134,7 @@ public class EnemyScript : MonoBehaviour
     {
         if (nearPlayer)
         {
-            enemyrb2d.velocity = directionTowardPlayer.normalized * 5;
+            enemyrb2d.velocity = directionTowardPlayer.normalized * speed;
             transform.rotation = Quaternion.Euler(0, 0, angleFromPlayer);
         }
         else
@@ -103,37 +144,34 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
+    public virtual void PheromoneBehaviour()
+    {
+        if(isAlpha)
+            //trigger dialogue
+        StartCoroutine(BasePheromoneBehaviour());
+    }
+
+    private IEnumerator BasePheromoneBehaviour()
+    {
+        pheromoned = true;
+        speed = speed / 2;
+        yield return new WaitForSeconds(1.5f);
+        speed = defaultSpeed;
+        pheromoned = false;
+    }
+
     public virtual void NeutralBehaviour()
     {
-        enemyrb2d.velocity = Vector2.zero;
-
-        if (nearPlayer)
+        if (time > 0)
         {
-            transform.rotation = Quaternion.Euler(0, 0, angleFromPlayer);
+            time -= Time.deltaTime;
         }
         else
         {
-            transform.rotation = Quaternion.identity;
+            enemyrb2d.velocity = new Vector2(UnityEngine.Random.Range(-360, 360), UnityEngine.Random.Range(-360, 360)).normalized * speed;
+            float newTime = UnityEngine.Random.Range(2, 10);
+            time = newTime;
         }
-        /*        Vector2 directionTowardSpawnPos = (spawnPos - currEnemyPos).normalized;
-                float angleToSpawn = GetAngle(directionTowardSpawnPos);*
 
-
-                if (spawnPos == currEnemyPos)
-                {
-                    enemyrb2d.velocity = Vector2.zero;
-                    if (nearPlayer)
-                    {
-                        transform.rotation = Quaternion.Euler(0, 0, angleFromPlayer);
-                    }
-                    else
-                    {
-                        transform.rotation = Quaternion.identity;
-                    }
-                }
-                else {
-                    enemyrb2d.velocity = directionTowardSpawnPos;
-                    //transform.rotation = Quaternion.Euler(0, 0, angleToSpawn);
-                }*/
     }
 }

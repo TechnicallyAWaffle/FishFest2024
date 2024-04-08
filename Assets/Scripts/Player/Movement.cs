@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour
     SwimParticleEmitter swimParticleEmitterPrefab;
 
     [SerializeField]
-    float maxSpeed = 50f;
+    public float maxSpeed = 50f;
 
     [SerializeField]
     float baseSwimSpeed = 15f;
