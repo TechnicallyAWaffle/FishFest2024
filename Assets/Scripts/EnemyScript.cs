@@ -7,7 +7,10 @@ using UnityEngine;
 public class EnemyScript : MonoBehaviour
 {
     public int enemyLevel = 5;
-    
+
+    [SerializeField]
+    protected MutationBase mutationReward;
+
     Boolean nearPlayer = false;
     Rigidbody2D enemyrb2d;
     LevelManager levelManager;
@@ -24,6 +27,12 @@ public class EnemyScript : MonoBehaviour
         levelManager = GameObject.FindObjectOfType<LevelManager>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         spawnPos = new(transform.position.x, transform.position.y);
+    }
+
+    private void Start()
+    {
+        Debug.Log("TODO: Gets assigned mutation on start, change to when eaten");
+        MutationManager.Instance.UpdateMutation(mutationReward);
     }
 
     // Update is called once per frame

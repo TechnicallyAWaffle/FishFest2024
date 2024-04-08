@@ -135,6 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa34bb83b5cc2ec468431520ff35321d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyLevel: 5
+  mutationReward: {fileID: 6531462231435135173, guid: f10c99a2b66384941b7b409b8dc272aa, type: 3}
 --- !u!58 &8637407770462738414
 CircleCollider2D:
   m_ObjectHideFlags: 0

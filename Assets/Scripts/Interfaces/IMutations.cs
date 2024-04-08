@@ -4,7 +4,10 @@ using UnityEngine;
 
 public interface IMutations
 {
-    public Sprite Sprite { get; protected set; }
+    public Sprite BodySprite { get; }
+
+    public Sprite MouthSprite { get; }
+
     void MutationPassive();
     void MutationActive();
 }

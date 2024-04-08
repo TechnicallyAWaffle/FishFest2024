@@ -58,6 +58,7 @@ public class Movement : MonoBehaviour
 
     private void SwimTowardsMouse()
     {
+        rb2d.angularVelocity = 0;
         rb2d.velocity = mousePath.normalized * currentSwimSpeed;
     }
 

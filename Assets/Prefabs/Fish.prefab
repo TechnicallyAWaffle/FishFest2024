@@ -315,7 +315,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f8c418fbbd5aa478ee4f5ea396020a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BodySpriteRenderer: {fileID: 3032701530072854117}
   movementSystem: {fileID: 6061269763034925091}
+  Invincible: 0
 --- !u!114 &6061269763034925091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,12 +362,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mutationList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  mutationSprites:
-  - {fileID: 21300000, guid: 5a85fe81acab4484c900bf2830c71432, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 4852411949387756887, guid: f10c99a2b66384941b7b409b8dc272aa, type: 3}

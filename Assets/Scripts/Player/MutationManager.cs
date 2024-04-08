@@ -53,7 +53,7 @@ public class MutationManager : MonoBehaviour
         {
             if (mutation.GetComponent<IMutations>().GetType() == incomingMutation.GetType())
             {
-                Player.Instance.gameObject.GetComponent<SpriteRenderer>().sprite = mutation.GetComponent<IMutations>().Sprite;
+                Player.Instance.BodySpriteRenderer.sprite = mutation.GetComponent<IMutations>().BodySprite;
                 currentMutation = Instantiate(mutation, gameObject.transform);
             }
         }

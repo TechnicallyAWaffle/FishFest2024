@@ -6,7 +6,10 @@ public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
 
+    public SpriteRenderer BodySpriteRenderer;
     public Movement movementSystem;
+
+    public bool Invincible = false;
 
     private void Awake()
     {

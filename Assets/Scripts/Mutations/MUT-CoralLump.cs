@@ -1,18 +1,58 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class NewBehaviourScript : MonoBehaviour
+public class CoralLumpMutation : MutationBase, IMutations
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    float invincibleTime = 1f;
+
+    [SerializeField]
+    float invincibleCooldown = 5f;
+
+    [SerializeField]
+    ParticleSystem invincibleVFX;
+
+    public override Sprite BodySprite => bodySprite;
+
+    public override Sprite MouthSprite => mouthSprite;
+
+    bool canActivate = true;
+
+    public override void MutationActive()
     {
-        
+        if (canActivate)
+        {
+            Debug.Log("Hello!");
+            canActivate = false;
+            Player.Instance.Invincible = true;
+            invincibleVFX.Play();
+            StartCoroutine(CallbackTimer(invincibleTime, EndInvincibility));
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void MutationPassive()
     {
-        
+
+    }
+
+    private void EndInvincibility()
+    {
+        Player.Instance.Invincible = false;
+        StartCoroutine(CallbackTimer(invincibleCooldown, EndCooldown));
+    }
+
+    private void EndCooldown()
+    {
+        canActivate = true;
+    }
+
+    IEnumerator CallbackTimer(float time, UnityAction onTimerEnd)
+    {
+        yield return new WaitForSeconds(time);
+
+        onTimerEnd.Invoke();
     }
 }
