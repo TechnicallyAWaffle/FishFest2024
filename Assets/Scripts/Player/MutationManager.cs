@@ -48,13 +48,17 @@ public class MutationManager : MonoBehaviour
 
     public void UpdateMutation(IMutations incomingMutation)
     {
+        currentMutation.GetComponent<IMutations>().OnMutationEnd();
         Destroy(currentMutation);
         foreach (GameObject mutation in mutationList)
         {
             if (mutation.GetComponent<IMutations>().GetType() == incomingMutation.GetType())
             {
                 Player.Instance.BodySpriteRenderer.sprite = mutation.GetComponent<IMutations>().BodySprite;
+                Player.Instance.MouthSpriteRenderer.sprite = mutation.GetComponent<IMutations>().MouthSprite;
                 currentMutation = Instantiate(mutation, gameObject.transform);
+                currentMutation.GetComponent<IMutations>().SetPlayer(Player.Instance);
+                currentMutation.GetComponent<IMutations>().OnMutationBegin();
             }
         }
     }

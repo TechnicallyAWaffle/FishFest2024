@@ -16,4 +16,8 @@ public class ScallopMutation : MutationBase, IMutations
     }
 
     public override void MutationPassive() {}
+
+    public override void OnMutationBegin() {}
+
+    public override void OnMutationEnd() {}
 }

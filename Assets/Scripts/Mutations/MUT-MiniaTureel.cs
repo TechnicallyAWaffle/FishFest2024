@@ -11,9 +11,6 @@ public class MiniaTureelMutation : MutationBase, IMutations
     [SerializeField]
     float camoAlpha = 0.33f;
 
-    public override Sprite BodySprite => bodySprite;
-    public override Sprite MouthSprite => mouthSprite;
-
     float timeNoMovement = 0f;
 
     public override void MutationActive() {}
@@ -37,4 +34,8 @@ public class MiniaTureelMutation : MutationBase, IMutations
             Debug.Log("Invisible!!! (TODO: currently not used by enemies)");
         }
     }
+
+    public override void OnMutationBegin() { }
+
+    public override void OnMutationEnd() { }
 }

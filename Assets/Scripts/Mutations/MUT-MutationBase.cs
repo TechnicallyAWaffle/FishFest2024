@@ -10,9 +10,14 @@ public abstract class MutationBase : MonoBehaviour, IMutations
     [SerializeField]
     protected Sprite mouthSprite;
 
-    public abstract Sprite BodySprite { get; }
-    public abstract Sprite MouthSprite { get; }
+    public virtual Sprite BodySprite => bodySprite;
+    public virtual Sprite MouthSprite => mouthSprite;
 
+    protected Player player;
+
+    public virtual void SetPlayer(Player player) {  this.player = player; }
+    public abstract void OnMutationBegin();
     public abstract void MutationActive();
     public abstract void MutationPassive();
+    public abstract void OnMutationEnd();
 }

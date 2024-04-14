@@ -1,7 +1,21 @@
 
+using Ink.Parsed;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+public struct MovementMod
+{
+    public string Name;
+    public float Value;
+
+    public MovementMod(string name, float value)
+    {
+        this.Name = name;
+        this.Value = value;
+    }
+}
 
 public class Movement : MonoBehaviour
 {
@@ -9,13 +23,13 @@ public class Movement : MonoBehaviour
     SwimParticleEmitter swimParticleEmitterPrefab;
 
     [SerializeField]
-    public float maxSpeed = 50f;
+    float baseMaxSpeed = 50f;
 
     [SerializeField]
     float baseSwimSpeed = 15f;
 
     [SerializeField]
-    float dashSpeed = 15f;
+    float baseDashSpeed = 15f;
 
     [SerializeField]
     float dashDecayRate = 50f;
@@ -25,6 +39,13 @@ public class Movement : MonoBehaviour
 
     [SerializeField]
     Transform bodySprite;
+
+    private readonly List<MovementMod> swimSpeedModifiers = new();
+    private readonly List<MovementMod> dashSpeedModifiers = new();
+    private float currentMinSpeed;
+    private float currentSwimSpeed;
+    private float currentDashSpeed;
+    private float currentMaxSpeed;
 
     public bool IsMoving => isMoving;
 
@@ -40,13 +61,90 @@ public class Movement : MonoBehaviour
 
     float mouseAngle;
 
-    private float currentSwimSpeed;
     bool isMoving = true;
 
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
     }
+
+    //-- UPDATE FUNCTIONS
+    public void GameFixedUpdate()
+    {
+        if (!isMoving) return;
+
+        if (IsAwayFromMouse())
+        {
+            SwimTowardsMouse();
+            bodySprite.rotation = Quaternion.Euler(0, 0, mouseAngle);
+        }
+        else
+        {
+            HaltFish();
+        }
+    }
+
+    public void GameUpdate()
+    {
+        if (!isMoving) return;
+
+        mousePos = Mouse.current.position.ReadValue();
+        mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        Vector2 playerPos = new(transform.position.x, transform.position.y);
+
+        mousePath = mouseWorldPos - playerPos;
+        mouseDistance = Vector2.Distance(playerPos, mouseWorldPos);
+        mouseAngle = GetAngleToMouse(mousePath);
+
+        UpdateCurrentMinSpeed();
+        UpdateCurrentMaxSpeed();
+        UpdateCurrentDashSpeed();
+        UpdateSwimSpeed();
+    }
+
+    //-- PUBLIC FUNCTIONS
+
+    public void Dash()
+    {
+        if (isMoving && IsAwayFromMouse())
+        {
+            currentSwimSpeed += currentDashSpeed;
+            SwimParticleEmitter swimEmitter = Instantiate(swimParticleEmitterPrefab, transform.position, Quaternion.identity);
+            swimEmitter.EmitAwayFromDirection(mouseAngle);
+            swimEmitter.SelfDestructInASecond();
+        }
+    }
+
+    public void SetMovementState(bool state)
+    {
+        isMoving = state;
+
+        if (isMoving == false)
+        {
+            HaltFish();
+        }
+    }
+
+    public void AddSwimMod(MovementMod mod)
+    {
+        swimSpeedModifiers.Add(mod);
+    }
+    public void RemoveSwimMod(MovementMod mod)
+    {
+        swimSpeedModifiers.Remove(mod);
+    }
+
+    public void AddDashMod(MovementMod mod)
+    {
+        dashSpeedModifiers.Add(mod);
+    }
+    public void RemoveDashMod(MovementMod mod)
+    {
+        dashSpeedModifiers.Remove(mod);
+    }
+
+    //-- HELPERS
 
     private bool IsAwayFromMouse()
     {
@@ -73,66 +171,44 @@ public class Movement : MonoBehaviour
         return angleDeg;
     }
 
-    public void GameUpdate()
+    // Calculates the current min speed from base swim + any modifiers to swim
+    private void UpdateCurrentMinSpeed()
     {
-        if (!isMoving) return;
-
-        mousePos = Mouse.current.position.ReadValue();
-        mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
-
-        Vector2 playerPos = new(transform.position.x, transform.position.y);
-
-        mousePath = mouseWorldPos - playerPos;
-        mouseDistance = Vector2.Distance(playerPos, mouseWorldPos);
-        mouseAngle = GetAngleToMouse(mousePath);
-
-        UpdateSwimSpeed();
+        currentMinSpeed = baseSwimSpeed;
+        foreach (var mod in swimSpeedModifiers)
+        {
+            currentMinSpeed += mod.Value;
+        }
     }
 
+    // Sets the max speed to the base max + any modifiers to swim & dash
+    private void UpdateCurrentMaxSpeed()
+    {
+        currentMaxSpeed = baseMaxSpeed;
+        foreach (var mod in swimSpeedModifiers)
+        {
+            currentMaxSpeed += mod.Value;
+        }
+        foreach (var mod in dashSpeedModifiers)
+        {
+            currentMaxSpeed += mod.Value;
+        }
+    }
+
+    // Sets the current dash speed to base + any mods to dash
+    private void UpdateCurrentDashSpeed()
+    {
+        currentDashSpeed = baseDashSpeed;
+        foreach(var mod in dashSpeedModifiers)
+        { 
+            currentDashSpeed += mod.Value; 
+        }
+    }
+
+    // Decays currentSwimSpeed & clamps the current swim speed between the current min and max speeds
     private void UpdateSwimSpeed()
     {
         currentSwimSpeed -= dashDecayRate * Time.deltaTime;
-        if (currentSwimSpeed <= baseSwimSpeed)
-        {
-            currentSwimSpeed = baseSwimSpeed;
-        }
-
-        currentSwimSpeed = Mathf.Clamp(currentSwimSpeed, baseSwimSpeed, maxSpeed);
-    }
-
-    public void GameFixedUpdate()
-    {
-        if (!isMoving) return;
-
-        if (IsAwayFromMouse())
-        {
-            SwimTowardsMouse();
-            bodySprite.rotation = Quaternion.Euler(0, 0, mouseAngle);
-        }
-        else
-        {
-            HaltFish();
-        }
-    }
-
-    public void Dash()
-    {
-        if (isMoving && IsAwayFromMouse())
-        {
-            currentSwimSpeed += dashSpeed;
-            SwimParticleEmitter swimEmitter = Instantiate(swimParticleEmitterPrefab, transform.position, Quaternion.identity);
-            swimEmitter.EmitAwayFromDirection(mouseAngle);
-            swimEmitter.SelfDestructInASecond();
-        }
-    }
-
-    public void SetMovementState(bool state)
-    {
-        isMoving = state;
-
-        if (isMoving == false)
-        {
-            HaltFish();
-        }
+        currentSwimSpeed = Mathf.Clamp(currentSwimSpeed, currentMinSpeed, currentMaxSpeed);
     }
 }

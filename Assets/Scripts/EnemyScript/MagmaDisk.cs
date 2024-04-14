@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class MagmaDisk : EnemyScript
 {
+    Queue<MovementMod> moveDebuffs = new();
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Player.Instance.movementSystem.maxSpeed -= 20f;
+        if (collision.gameObject.tag == "Player")
+        {
+            MovementMod magmaDebuff = new MovementMod("MagmaDebuff", -20f);
+            moveDebuffs.Enqueue(magmaDebuff);
+            Player.Instance.movementSystem.AddSwimMod(magmaDebuff);
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        Player.Instance.movementSystem.maxSpeed += 20f;
+        Player.Instance.movementSystem.RemoveSwimMod(moveDebuffs.Dequeue());
     }
 
     public override void ChasingBehaviour()

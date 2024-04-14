@@ -15,10 +15,6 @@ public class CoralLumpMutation : MutationBase, IMutations
     [SerializeField]
     ParticleSystem invincibleVFX;
 
-    public override Sprite BodySprite => bodySprite;
-
-    public override Sprite MouthSprite => mouthSprite;
-
     bool canActivate = true;
 
     public override void MutationActive()
@@ -55,4 +51,8 @@ public class CoralLumpMutation : MutationBase, IMutations
 
         onTimerEnd.Invoke();
     }
+
+    public override void OnMutationBegin() { }
+
+    public override void OnMutationEnd() { }
 }

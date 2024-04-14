@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
 	
     public GameObject player;
 	public SpriteRenderer BodySpriteRenderer;
+    public SpriteRenderer MouthSpriteRenderer;
 	
     public bool Invincible = false;
     public bool Invisible = false;	
