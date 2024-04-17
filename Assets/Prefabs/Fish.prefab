@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2896960952941617890}
   - component: {fileID: 3032701530072854117}
+  - component: {fileID: 8809460625296537020}
   m_Layer: 3
   m_Name: Body
   m_TagString: Player
@@ -115,6 +116,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7739110366528467654}
+  - {fileID: 6502100443099731676}
   m_Father: {fileID: 9005058402747248086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3032701530072854117
@@ -169,6 +171,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!70 &8809460625296537020
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287323906913843615}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.27, y: 0}
+  m_Size: {x: 2.15, y: 1}
+  m_Direction: 1
 --- !u!1 &1584152977349063748
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,14 +216,12 @@ GameObject:
   m_Component:
   - component: {fileID: 9005058402747248086}
   - component: {fileID: 8662998400257936114}
-  - component: {fileID: 2979972273971974781}
-  - component: {fileID: 8997512086264262961}
   - component: {fileID: 3453870424385660614}
   - component: {fileID: 6061269763034925091}
+  - component: {fileID: 33831401843160029}
   - component: {fileID: 8106119497571664424}
   - component: {fileID: 45119485230076893}
   - component: {fileID: 7331648873019208336}
-  - component: {fileID: 7277680491421178736}
   m_Layer: 3
   m_Name: Fish
   m_TagString: Player
@@ -349,7 +384,52 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!50 &2979972273971974781
+--- !u!114 &3453870424385660614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584152977349063748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f8c418fbbd5aa478ee4f5ea396020a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pSpawner: {fileID: 0}
+  introManager: {fileID: 0}
+  movementSystem: {fileID: 6061269763034925091}
+  bite: {fileID: 45119485230076893}
+  PelletShooter: {fileID: 4991989605573054154}
+  player: {fileID: 0}
+  BodySpriteRenderer: {fileID: 3032701530072854117}
+  MouthSpriteRenderer: {fileID: 4459964987777564100}
+  Invincible: 0
+  Invisible: 0
+--- !u!114 &6061269763034925091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584152977349063748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdec859341a74b44091a0e1159e855b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swimParticleEmitterPrefab: {fileID: 275392607363450429, guid: 5f5ee18a9fceb544f925dfc02613dcca, type: 3}
+  baseMaxSpeed: 50
+  baseSwimSpeed: 15
+  baseDashSpeed: 15
+  dashDecayRate: 50
+  distanceToMouse: 2
+  bodySprite: {fileID: 2896960952941617890}
+  currentMinSpeed: 0
+  currentSwimSpeed: 0
+  currentDashSpeed: 0
+  currentMaxSpeed: 0
+--- !u!50 &33831401843160029
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -375,82 +455,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
---- !u!70 &8997512086264262961
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1584152977349063748}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.27, y: 0}
-  m_Size: {x: 2.15, y: 1}
-  m_Direction: 1
---- !u!114 &3453870424385660614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1584152977349063748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22f8c418fbbd5aa478ee4f5ea396020a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pSpawner: {fileID: 0}
-  introManager: {fileID: 0}
-  movementSystem: {fileID: 6061269763034925091}
-  bite: {fileID: 45119485230076893}
-  PelletShooter: {fileID: 0}
-  player: {fileID: 0}
-  BodySpriteRenderer: {fileID: 3032701530072854117}
-  Invincible: 0
-  Invisible: 0
---- !u!114 &6061269763034925091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1584152977349063748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdec859341a74b44091a0e1159e855b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  swimParticleEmitterPrefab: {fileID: 275392607363450429, guid: 5f5ee18a9fceb544f925dfc02613dcca, type: 3}
-  maxSpeed: 50
-  baseSwimSpeed: 15
-  dashSpeed: 15
-  dashDecayRate: 50
-  distanceToMouse: 2
-  bodySprite: {fileID: 2896960952941617890}
+  m_Constraints: 4
 --- !u!114 &8106119497571664424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,7 +489,7 @@ MonoBehaviour:
   bittenBuffer: 0
   biting: 0
   biteTimer: 0
-  mouthSpriteRenderer: {fileID: 0}
+  mouthSpriteRenderer: {fileID: 4459964987777564100}
 --- !u!114 &7331648873019208336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,21 +502,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e862838bd9965478abfdbf60936a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mutationList: []
---- !u!114 &7277680491421178736
+  mutationList:
+  - {fileID: 2174052227722012955, guid: 65b640b84ec9eb54fb34c621e84b628b, type: 3}
+  - {fileID: 4852411949387756887, guid: f10c99a2b66384941b7b409b8dc272aa, type: 3}
+  - {fileID: 5942903999884404612, guid: db477c8fe2c7b964d8fb201fd3af8f7c, type: 3}
+  - {fileID: 6667326774857473591, guid: 4d55e007d48f8e5408d7c88b65354634, type: 3}
+  - {fileID: 2139257901850954574, guid: 4ff36139ffaff0a4899887ec2c0729cc, type: 3}
+  body: {fileID: 2896960952941617890}
+--- !u!1 &5767477548817155527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6502100443099731676}
+  - component: {fileID: 4991989605573054154}
+  m_Layer: 3
+  m_Name: Pellet Shooter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6502100443099731676
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5767477548817155527}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2896960952941617890}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4991989605573054154
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1584152977349063748}
+  m_GameObject: {fileID: 5767477548817155527}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de1aff38563e8bf4899c5f5372a1886e, type: 3}
+  m_Script: {fileID: 11500000, guid: 98dbd073259ad564e91d9ea01263977a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelRandomLowerBound: 0
-  levelRandomUpperBound: 0
+  pelletPrefab: {fileID: 7689546781358468899, guid: d35d76a2edfcde64bb94e945ff158ee0, type: 3}
 --- !u!1 &7119467658638424477
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,8 +580,8 @@ Transform:
   m_GameObject: {fileID: 7119467658638424477}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8048, y: -0.02, z: 0}
-  m_LocalScale: {x: 0.9879, y: 1, z: 1}
+  m_LocalPosition: {x: 0.456, y: -0.115, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2896960952941617890}
@@ -582,10 +624,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -422745013
+  m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c84f03d4daaf4a848bcd0e7944bcfd66, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 85b669e0bfce110428686cbdf21e8c81, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

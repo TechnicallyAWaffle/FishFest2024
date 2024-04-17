@@ -12,6 +12,7 @@ public class MutationManager : MonoBehaviour
     private GameObject currentMutation;
 
     [SerializeField] private List<GameObject> mutationList = new List<GameObject>();
+    [SerializeField] private Transform body;
 
     public static MutationManager Instance
     {
@@ -48,7 +49,7 @@ public class MutationManager : MonoBehaviour
 
     public void UpdateMutation(IMutations incomingMutation)
     {
-        currentMutation.GetComponent<IMutations>().OnMutationEnd();
+        currentMutation?.GetComponent<IMutations>().OnMutationEnd();
         Destroy(currentMutation);
         foreach (GameObject mutation in mutationList)
         {
@@ -56,7 +57,7 @@ public class MutationManager : MonoBehaviour
             {
                 Player.Instance.BodySpriteRenderer.sprite = mutation.GetComponent<IMutations>().BodySprite;
                 Player.Instance.MouthSpriteRenderer.sprite = mutation.GetComponent<IMutations>().MouthSprite;
-                currentMutation = Instantiate(mutation, gameObject.transform);
+                currentMutation = Instantiate(mutation, body);
                 currentMutation.GetComponent<IMutations>().SetPlayer(Player.Instance);
                 currentMutation.GetComponent<IMutations>().OnMutationBegin();
             }

@@ -45,5 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodySprite: {fileID: 21300000, guid: 503fca594e2a0304b825690ab55fca37, type: 3}
-  mouthSprite: {fileID: 0}
+  mouthSprite: {fileID: 21300000, guid: 85b669e0bfce110428686cbdf21e8c81, type: 3}
   camoTime: 1
+  camoAlpha: 0.33

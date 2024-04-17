@@ -42,6 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Mouth
+    uniqueID: 3872222283
+    locked: 0
   - name: Foreground
     uniqueID: 2600371145
     locked: 0

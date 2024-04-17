@@ -45,5 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodySprite: {fileID: 21300000, guid: fa43960e7cff5484985aa1b298ea06ce, type: 3}
-  mouthSprite: {fileID: 0}
+  mouthSprite: {fileID: 21300000, guid: 67e8e624f6311094aadc7a7e78df2dd5, type: 3}
   shootForce: 1250

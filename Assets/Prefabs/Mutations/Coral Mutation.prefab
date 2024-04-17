@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodySprite: {fileID: 21300000, guid: 197f5d0308243ef4db34bb0cec66a626, type: 3}
-  mouthSprite: {fileID: 0}
+  mouthSprite: {fileID: 21300000, guid: 67e8e624f6311094aadc7a7e78df2dd5, type: 3}
   invincibleTime: 1
   invincibleCooldown: 5
   invincibleVFX: {fileID: 4208628089528316582}
@@ -4795,7 +4795,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: e9161a5bc8e5f4a4fb263cfa491c095b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4814,7 +4814,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1694596151
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0

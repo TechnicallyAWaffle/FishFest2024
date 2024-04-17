@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodySprite: {fileID: 21300000, guid: 087517519777a1c4c92bbb7eebff4feb, type: 3}
-  mouthSprite: {fileID: 0}
-  swimSpeedBonus: 7.5
+  mouthSprite: {fileID: 21300000, guid: c84f03d4daaf4a848bcd0e7944bcfd66, type: 3}
+  swimSpeedBonus: 12.5
   dashSpeedBonus: 5

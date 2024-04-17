@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public struct MovementMod
+public class MovementMod
 {
     public string Name;
     public float Value;
@@ -42,10 +42,10 @@ public class Movement : MonoBehaviour
 
     private readonly List<MovementMod> swimSpeedModifiers = new();
     private readonly List<MovementMod> dashSpeedModifiers = new();
-    private float currentMinSpeed;
-    private float currentSwimSpeed;
-    private float currentDashSpeed;
-    private float currentMaxSpeed;
+    [SerializeField] private float currentMinSpeed;
+    [SerializeField] private float currentSwimSpeed;
+    [SerializeField] private float currentDashSpeed;
+    [SerializeField] private float currentMaxSpeed;
 
     public bool IsMoving => isMoving;
 
